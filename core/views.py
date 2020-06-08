@@ -1,14 +1,8 @@
 from django.shortcuts import render
 from .models import *
+from django.views.generic import ListView, DetailView
 
 # Create your views here.
-def home(request):
-    context = {
-        'items':Item.objects.all()
-    }
-    return render(request, 'home.html', context)
-
-
 def checkout(request):
     context = {
         
@@ -21,3 +15,11 @@ def products(request):
         'items':Item.objects.all()
     }
     return render(request, 'products.html', context)
+
+class HomeView(ListView):
+    model = Item
+    template_name = "home.html"
+
+
+
+
