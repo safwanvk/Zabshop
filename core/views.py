@@ -2,22 +2,22 @@ from django.shortcuts import render
 from .models import *
 
 # Create your views here.
-def home_page(request):
+def home(request):
     context = {
         'items':Item.objects.all()
     }
-    return render(request, 'home-page.html', context)
+    return render(request, 'home.html', context)
 
 
-def checkout_page(request):
+def checkout(request):
     context = {
         'items':Item.objects.all()
     }
-    return render(request, 'checkout-page.html', context)
+    return render(request, 'checkout.html', context)
 
 
-def product_page(request):
+def products(request):
     context = {
         'items':Item.objects.all()
     }
-    return render(request, 'product-page.html', context)
+    return render(request, 'products.html', context)
