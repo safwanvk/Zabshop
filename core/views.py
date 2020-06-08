@@ -11,7 +11,7 @@ def home(request):
 
 def checkout(request):
     context = {
-        'items':Item.objects.all()
+        
     }
     return render(request, 'checkout.html', context)
 
