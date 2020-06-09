@@ -1,7 +1,10 @@
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, View
 from django.utils import timezone
 
 # Create your views here.
@@ -23,11 +26,26 @@ class HomeView(ListView):
     paginate_by = 10
     template_name = "home.html"
 
+class OrderSummaryView(View):
+    def get(self, *args, **kwargs):
+        try:
+            order = Order.objects.get(user=self.request.user, ordered=False)
+            context = {
+                'object': order
+            }
+            return render(self.request, 'order_summary.html', context)
+        except ObjectDoesNotExist:
+            messages.warning(self.request, "You do not have active order")
+            return redirect("/")
+        
+   
+
+
 
 class ItemDetailView(DetailView):
     model = Item
     template_name = "product.html"
-
+@login_required
 def add_to_cart(request, slug):
     item = get_object_or_404(Item, slug=slug)
     order_item, created = OrderItem.objects.get_or_create(
@@ -53,7 +71,7 @@ def add_to_cart(request, slug):
         order.item.add(order_item)
         messages.info(request, "This item was added to your cart.")
     return redirect("core:product", slug=slug)
-
+@login_required
 def remove_from_cart(request, slug):
     item = get_object_or_404(Item, slug=slug)
     order_qs = Order.objects.filter(user=request.user, ordered=False)
