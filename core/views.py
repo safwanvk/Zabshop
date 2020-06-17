@@ -126,7 +126,7 @@ def remove_single_item_from_cart(request, slug):
             messages.info(request, "You do not have  an active order.")
             return redirect("core:product", slug=slug)
         return redirect("core:product", slug=slug)
-    
+
 
 
 

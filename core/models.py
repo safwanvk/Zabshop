@@ -3,6 +3,7 @@ from django.conf import settings
 from django.shortcuts import reverse
 
 
+
 # Create your models here.
 
 CATEGORY_CHOICES = [
@@ -16,6 +17,11 @@ LABEL_CHOICES = [
     ('P', 'primary'),
     ('S', 'secoundary'),
     ('D', 'danger'),
+]
+
+ADDRESS_CHOICES = [
+    ('B', 'Billing'),
+    ('S', 'Shipping'),
 ]
 
 class Item(models.Model):
@@ -49,8 +55,6 @@ class OrderItem(models.Model):
     ordered = models.BooleanField(default=False)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
-    
-
 
     def __str__(self):
         return f"{self.quantity} of {self.item.title}"
@@ -67,4 +71,16 @@ class Order(models.Model):
     def __str__(self):
         return self.user.username
 
-  
+class Address(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    street_address = models.CharField(max_length=100)
+    apartment_address = models.CharField(max_length=100)
+    zip = models.CharField(max_length=100)
+    address_type = models.CharField(max_length=1, choices=ADDRESS_CHOICES)
+    default = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.user.username
+
+    class Meta:
+        verbose_name_plural = 'Addresses'
