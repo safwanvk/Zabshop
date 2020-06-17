@@ -29,7 +29,11 @@
                   <th scope="row">1</th>
                   <td>{{ order_item.item.title }}</td>
                   <td>{{ order_item.item.price }}</td>
-                  <td>{{ order_item.quantity }}</td>
+                  <td>
+                      <a href="{% url 'core:remove-single-item-from-cart' order_item.item.slug %}"><i class="fas fa-minus mr-2"></i></a>
+                      {{ order_item.quantity }}
+                      <a href="{% url 'core:add-to-cart' order_item.item.slug %}"><i class="fas fa-plus mr-2"></i></a>
+                  </td>
                   <td>???</td>
                 </tr>
                 {% endfor %}
