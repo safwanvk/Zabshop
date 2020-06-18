@@ -88,13 +88,14 @@ def remove_from_cart(request, slug):
                 )[0]
                 order.item.remove(order_item)
                 messages.info(request, "This item was removed from your cart.")
+                return redirect("core:order-summary")
             else:
                 messages.info(request, "This item was not in your cart.")
                 return redirect("core:product", slug=slug)
         else:
             messages.info(request, "You do not have  an active order.")
             return redirect("core:product", slug=slug)
-        return redirect("core:product", slug=slug)
+
 
 @login_required
 def remove_single_item_from_cart(request, slug):
@@ -125,7 +126,7 @@ def remove_single_item_from_cart(request, slug):
         else:
             messages.info(request, "You do not have  an active order.")
             return redirect("core:product", slug=slug)
-        return redirect("core:product", slug=slug)
+      
 
 
 
