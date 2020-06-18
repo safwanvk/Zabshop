@@ -130,3 +130,4 @@ def remove_single_item_from_cart(request, slug):
 
 
 
+
