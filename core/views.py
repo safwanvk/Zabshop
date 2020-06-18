@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 
 from .forms import CheckoutForm
-from .models import *
+from .models import Item, OrderItem, Order, Address
 from django.views.generic import ListView, DetailView, View
 from django.utils import timezone
 
@@ -21,13 +21,37 @@ class CheckoutView(View):
 
     def post(self, *args, **kwargs):
         form = CheckoutForm(self.request.POST or None)
-        print(self.request.POST)
-        if form.is_valid():
-            print(form.cleaned_data)
-            print("The form is valid")
+        try:
+            order = Order.objects.get(user=self.request.user, ordered=False)
+            if form.is_valid():
+                street_address = form.cleaned_data.get('street_address')
+                apartment_address = form.cleaned_data.get('apartment_address')
+                country = form.cleaned_data.get('country')
+                zip = form.cleaned_data.get('zip')
+                # TODO: add functionality for these fields
+                # same_shopping_address = form.cleaned_data.get('same_shopping_address')
+                # save_info = form.cleaned_data.get('save_info')
+                # payment_option = form.cleaned_data.get('payment_option')
+                billing_address = Address(
+                    user=self.request.user,
+                    street_address=street_address,
+                    apartment_address=apartment_address,
+                    country=country,
+                    zip=zip
+                )
+                billing_address.save()
+                order.billing_address = billing_address
+                order.save()
+                # TODO: add redirect to the selected payment option
+                return redirect('core:checkout')
+            messages.warning(self.request, "Failed checkout")
             return redirect('core:checkout')
-        messages.warning(self.request, "Failed checkout")
-        return redirect('core:checkout')
+        except ObjectDoesNotExist:
+            messages.warning(self.request, "You do not have active order")
+            return redirect("/")
+        print(self.request.POST)
+
+
 
 
 
