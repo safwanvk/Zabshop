@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
@@ -9,7 +10,12 @@ from .models import Item, OrderItem, Order, Address
 from django.views.generic import ListView, DetailView, View
 from django.utils import timezone
 
+
+
+
+
 # Create your views here.
+
 
 class CheckoutView(View):
     def get(self, *args, **kwargs):
@@ -53,7 +59,21 @@ class CheckoutView(View):
 
 class PaymentView(View):
     def get(self, *args, **kwargs):
+
         return render(self.request, "payment.html")
+
+    def post(self, *args, **kwargs):
+        order = Order.objects.get(user=self.request.user, ordered=False)
+        token = self.request.POST.get('stripeToken')
+        stripe.Charge.create(
+            amount=order.get_total() * 100,  # cents
+            currency="eur",
+            source=token
+        )
+
+        order.ordered = True
+
+
 
 
 
