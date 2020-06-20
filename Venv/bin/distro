@@ -1,4 +1,4 @@
-#!/home/safwan/project/Ecommerse-Website-with-django/Venv/bin/python
+#!/home/safwan/projects/Ecommerse-Website-with-django/Venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

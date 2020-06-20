@@ -1,4 +1,4 @@
-#!/home/safwan/project/Ecommerse-Website-with-django/Venv/bin/python
+#!/home/safwan/projects/Ecommerse-Website-with-django/Venv/bin/python
 from django.core import management
 
 if __name__ == "__main__":

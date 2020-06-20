@@ -124,10 +124,13 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'static')
+    os.path.join(BASE_DIR, 'static')
 ]
 
 
 MEDIA_URL = '/images/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+STRIPE_PUBLIC_KEY = 'pk_test_51GviWUA3JvaziRH0zMwtPWNM9oMEVaxFYsDb6KVGhQrZA7NrOduylXINhFgKTpDHhlZWEHTP0XtusKYFJlzqeicN00vaPhesaI'
+STRIPE_SECRET_KEY = 'sk_test_51GviWUA3JvaziRH0aYbMSdKrOgkHjv74iGw9B9Js1iknCckeQ3rfqXgfRrYuJXycVoKqZynSNgFxO9hfMLCA1dTA00xNwUdYhB'

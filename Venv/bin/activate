@@ -46,7 +46,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV='/home/safwan/project/Ecommerse-Website-with-django/Venv'
+VIRTUAL_ENV='/home/safwan/projects/Ecommerse-Website-with-django/Venv'
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
