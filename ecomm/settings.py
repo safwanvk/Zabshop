@@ -128,8 +128,8 @@ STATICFILES_DIRS = [
 ]
 
 
-MEDIA_URL = '/images/'
-
+MEDIA_URL = '/img/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/img')
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 STRIPE_PUBLIC_KEY = 'pk_test_51GviWUA3JvaziRH0zMwtPWNM9oMEVaxFYsDb6KVGhQrZA7NrOduylXINhFgKTpDHhlZWEHTP0XtusKYFJlzqeicN00vaPhesaI'

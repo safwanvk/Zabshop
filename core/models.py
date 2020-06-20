@@ -33,15 +33,24 @@ class Item(models.Model):
     label = models.CharField(choices=LABEL_CHOICES, max_length=1)
     slug = models.SlugField()
     description = models.TextField()
-    
+    image = models.ImageField(blank=True, null=True)
+
     def __str__(self):
         return self.title
+
+    @property
+    def imageURL(self):
+        try:
+            url = self.image.url
+        except:
+            url = ''
+        return url
 
     def get_absolute_url(self):
         return reverse("core:product", kwargs={
             'slug': self.slug
         })
-    
+
     def get_add_to_cart_url(self):
         return reverse("core:add-to-cart", kwargs={
             'slug': self.slug
