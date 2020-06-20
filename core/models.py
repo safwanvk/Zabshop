@@ -97,6 +97,21 @@ class Order(models.Model):
     billing_address = models.ForeignKey('Address', on_delete=models.SET_NULL, blank=True, null=True)
     payment = models.ForeignKey('Payment', on_delete=models.SET_NULL, blank=True, null=True)
     coupon = models.ForeignKey('Coupon', on_delete=models.SET_NULL, blank=True, null=True)
+    being_delivered = models.BooleanField(default=False)
+    received = models.BooleanField(default=False)
+    refund_requested = models.BooleanField(default=False)
+    refund_granted = models.BooleanField(default=False)
+
+    '''
+    1. item added to cart
+    2. adding billing address
+    (Failed checkout)
+    3. payment
+    ( preprocessing, processing, packaging etc.)
+    4. Being delivered
+    5. Received
+    6. Refunds
+    '''
 
     def __str__(self):
         return self.user.username
@@ -105,7 +120,8 @@ class Order(models.Model):
         total = 0
         for order_item in self.item.all():
             total += order_item.get_final_price()
-        total -= self.coupon.amount
+        if self.coupon:
+            total -= self.coupon.amount
         return total
 
 class Address(models.Model):
