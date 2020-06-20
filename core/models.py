@@ -105,7 +105,7 @@ class Order(models.Model):
         total = 0
         for order_item in self.item.all():
             total += order_item.get_final_price()
-        
+        total -= self.coupon.amount
         return total
 
 class Address(models.Model):
