@@ -35,6 +35,7 @@ class Item(models.Model):
     description = models.TextField()
     image = models.ImageField(blank=True, null=True)
 
+
     def __str__(self):
         return self.title
 
@@ -60,10 +61,14 @@ class Item(models.Model):
             'slug': self.slug
         })
 
+
+
+
+
 class OrderItem(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
-    ordered = models.BooleanField(default=False)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    ordered = models.BooleanField(default=False)
     quantity = models.IntegerField(default=1)
 
     def __str__(self):
@@ -120,6 +125,12 @@ class Payment(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class Coupen(models.Model):
+    code = models.CharField(max_length=15)
+
+    def __str__(self):
+        return self.code
 
 
 
