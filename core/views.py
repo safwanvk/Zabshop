@@ -5,16 +5,21 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 
-from .forms import CheckoutForm, CouponForm
+from .forms import CheckoutForm, CouponForm, RefundForm
 from .models import Item, OrderItem, Order, Address, Payment, Coupon
 from django.views.generic import ListView, DetailView, View
 from django.utils import timezone
 
+import random
+import string
 import stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 # Create your views here.
+
+def create_ref_code():
+    return ''.join(random.choices(string.ascii_lowercase + string.digits, k=20))
 
 
 class CheckoutView(View):
@@ -112,6 +117,8 @@ class PaymentView(View):
 
             order.ordered = True
             order.payment = payment
+            # TODO: assign ref code
+            order.ref_code = create_ref_code()
             order.save()
 
             messages.success(self.request, "Your order was successful!")
@@ -305,5 +312,7 @@ class AddCouponView(View):
                 # TODO: raise error
                 return None
 
+class RequestRefundView(View):
+    def post(self, *args, **kwargs):
 
 
