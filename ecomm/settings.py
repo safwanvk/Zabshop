@@ -24,9 +24,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'uhk#_9n63ha_o2ffb-yc&&0%(4-^xx(!+97p$yicj=_2n7-x&s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['zabshop.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
